@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini étude de cas – Le prix en marketing (BTS NDRC)</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f4f6f9;
+      color: #111827;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(120deg, #1d4ed8, #1e293b);
+      color: #fff;
+      padding: 1.4rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    header p {
+      margin: 0.2rem 0 0;
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 1rem auto 2rem;
+      padding: 0 1rem;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 0.8rem;
+    }
+
+    .case-card {
+      background: #ffffff;
+      border-radius: 0.8rem;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid #e5e7eb;
+    }
+
+    .case-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.08rem 0.45rem;
+      border-radius: 999px;
+      background-color: #e0f2fe;
+      color: #1d4ed8;
+      margin-left: 0.3rem;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.08rem 0.45rem;
+      border-radius: 999px;
+      background-color: #e5e7eb;
+      color: #374151;
+      margin-right: 0.3rem;
+      margin-top: 0.2rem;
+    }
+
+    .case-body {
+      font-size: 0.88rem;
+      line-height: 1.4;
+      margin-top: 0.4rem;
+    }
+
+    .case-body strong {
+      font-weight: 600;
+    }
+
+    .flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.6rem;
+    }
+
+    .half {
+      flex: 1 1 260px;
+    }
+
+    details {
+      margin-top: 0.4rem;
+      background: #f9fafb;
+      border-radius: 0.6rem;
+      padding: 0.5rem 0.7rem;
+      border: 1px dashed #e5e7eb;
+      font-size: 0.83rem;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #1d4ed8;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details summary::before {
+      content: "▶ ";
+      font-size: 0.7rem;
+    }
+
+    details[open] summary::before {
+      content: "▼ ";
+    }
+
+    ul, ol {
+      margin: 0.4rem 0;
+      padding-left: 1.1rem;
+    }
+
+    .exo {
+      background: #f9fafb;
+      border-radius: 0.7rem;
+      padding: 0.7rem 0.8rem;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 0.7rem;
+    }
+
+    .exo-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .exo-enonce {
+      font-size: 0.86rem;
+      margin-bottom: 0.35rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-top: 0.2rem;
+      margin-bottom: 0.12rem;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.35rem 0.4rem;
+      border-radius: 0.4rem;
+      border: 1px solid #d1d5db;
+      font-size: 0.85rem;
+    }
+
+    textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    .unit {
+      font-size: 0.78rem;
+      color: #6b7280;
+      margin-top: 0.05rem;
+    }
+
+    .btn {
+      margin-top: 0.45rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: none;
+      background-color: #1d4ed8;
+      color: #fff;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background-color: #6b7280;
+    }
+
+    .btn:hover {
+      filter: brightness(1.05);
+    }
+
+    .result {
+      margin-top: 0.35rem;
+      font-size: 0.8rem;
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.5rem;
+      display: none;
+    }
+
+    .result.ok {
+      background-color: #dcfce7;
+      border: 1px solid #86efac;
+      color: #14532d;
+    }
+
+    .result.ko {
+      background-color: #fee2e2;
+      border: 1px solid #fecaca;
+      color: #7f1d1d;
+    }
+
+    .result strong {
+      display: block;
+      margin-bottom: 0.12rem;
+    }
+
+    .result span.exp {
+      display: block;
+      margin-top: 0.18rem;
+      color: #4b5563;
+    }
+
+    .mcq-option {
+      font-size: 0.83rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .mcq-option input {
+      margin-right: 0.25rem;
+    }
+
+    @media (max-width: 640px) {
+      header h1 { font-size: 1.25rem; }
+      header p { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Mini étude de cas – Stratégie de prix (BTS NDRC)</h1>
+  <p>Comprendre, calculer, choisir et justifier un prix dans un cas de reconditionné</p>
+</header>
+
+<div class="container">
+  <!-- Contexte -->
+  <div class="case-card">
+    <div class="case-title">
+      Contexte : Recommerce+ – smartphones reconditionnés
+      <span class="badge">Étude de cas</span>
+    </div>
+    <div class="case-body">
+      Recommerce+ est une entreprise qui vend des <strong>smartphones reconditionnés</strong> (ex : iPhone 12) avec garantie.
+      Tu es chargé(e) de proposer une <strong>stratégie de prix</strong> cohérente, en tenant compte :
+      <ul>
+        <li>des <strong>coûts</strong> (coût de revient, marge),</li>
+        <li>de la <strong>concurrence</strong>,</li>
+        <li>du <strong>prix psychologique</strong> des clients,</li>
+        <li>de la <strong>valeur perçue</strong> et de la <strong>sensibilité au prix</strong>.</li>
+      </ul>
+      Données de base pour l’iPhone 12 reconditionné :
+      <ul>
+        <li>Coût de revient unitaire (achat + reconditionnement + SAV) : <strong>220 €</strong></li>
+        <li>Prix moyen des concurrents sur le marché : <strong>289 €</strong></li>
+        <li>Zone de prix jugés acceptables par les clients (enquêtes) : <strong>entre 260 € et 320 €</strong></li>
+      </ul>
+
+      <div class="tagline">
+        Objectif : <strong>calculer un prix</strong>, <strong>choisir une stratégie</strong> et <strong>justifier tes décisions</strong> comme en E4.
+      </div>
+    </div>
+  </div>
+
+  <!-- Ressource cours synthétique -->
+  <div class="case-card">
+    <div class="case-title">
+      Ressource – Le prix : rappels essentiels
+      <span class="badge">Cours synthèse</span>
+    </div>
+    <div class="case-body">
+      <details>
+        <summary>1. Composantes du prix marketing</summary>
+        <ul>
+          <li><strong>Coût de revient</strong> : ensemble des coûts pour mettre le produit à disposition (achat, reconditionnement, logistique, SAV).</li>
+          <li><strong>Marge</strong> : partie du prix qui permet d’atteindre les objectifs de rentabilité.</li>
+          <li><strong>Prix psychologique</strong> : prix que le client juge acceptable (ni trop bas, ni trop élevé).</li>
+          <li><strong>Positionnement</strong> : image associée au prix (entrée de gamme, premium, accessible…).</li>
+          <li><strong>Concurrence</strong> : prix pratiqués sur le marché.</li>
+          <li><strong>Stratégie</strong> : prix d’appel, pénétration, écrémage, différenciation…</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>2. Stratégies de prix</summary>
+        <ul>
+          <li><strong>Prix d’alignement</strong> : s’aligner sur les concurrents (ex. 289 € comme le marché).</li>
+          <li><strong>Écrémage</strong> : prix plus élevé pour valoriser une offre très différenciante.</li>
+          <li><strong>Pénétration</strong> : prix bas pour conquérir rapidement des clients.</li>
+          <li><strong>Différenciation</strong> : prix justifié par la valeur ajoutée (SAV, RSE, transparence, services).</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>3. Prix psychologique & valeur perçue</summary>
+        <ul>
+          <li>Un prix trop bas peut faire douter de la qualité.</li>
+          <li>Un prix trop haut peut bloquer l’achat.</li>
+          <li>Le client repère une <strong>zone d’acceptabilité</strong> (plancher / plafond).</li>
+          <li>Le prix est jugé à travers la <strong>valeur perçue</strong> : bénéfices, preuves, expérience, cible.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>4. Sensibilité au prix, élasticité et rôle du digital</summary>
+        <ul>
+          <li><strong>Élasticité forte</strong> : petite variation de prix → forte variation de la demande.</li>
+          <li><strong>Élasticité faible</strong> : le volume varie peu quand le prix change.</li>
+          <li>Le digital renforce la transparence : comparateurs, avis, algorithmes de prix, promos personnalisées.</li>
+        </ul>
+      </details>
+    </div>
+  </div>
+
+  <!-- Exercices progressifs -->
+  <div class="case-card">
+    <div class="case-title">
+      Activités – Analyser, calculer, choisir et justifier
+      <span class="badge">Mini parcours guidé</span>
+    </div>
+
+    <!-- Exercice 1 -->
+    <div class="exo">
+      <div class="exo-title">
+        Exercice 1 – Calcul d’un prix de vente à partir du coût
+        <span class="pill">calcul</span><span class="pill">coût & marge</span>
+      </div>
+      <p class="exo-enonce">
+        Recommerce+ souhaite appliquer une <strong>marge de 25 %</strong> calculée sur le coût de revient pour l’iPhone 12.  
+        Coût de revient unitaire : <strong>220 €</strong>.  
+        Calcule le <strong>prix de vente unitaire HT</strong> correspondant.
+      </p>
+      <label for="rep1">Ta réponse (prix de vente unitaire HT) :</label>
+      <input type="text" id="rep1" placeholder="Ex : 275">
+      <div class="unit">Unité : €</div>
+      <button class="btn" data-exo="1">Vérifier</button>
+      <div class="result" id="fb1"></div>
+    </div>
+
+    <!-- Exercice 2 -->
+    <div class="exo">
+      <div class="exo-title">
+        Exercice 2 – Choix de la stratégie de prix
+        <span class="pill">analyse</span><span class="pill">stratégie</span>
+      </div>
+      <p class="exo-enonce">
+        Le prix moyen des concurrents pour un iPhone 12 reconditionné similaire est de <strong>289 €</strong>.  
+        Recommerce+ décide de fixer exactement ce même prix, sans avantage particulier ni promotion agressive.  
+        Quelle <strong>stratégie de prix</strong> décrit le mieux ce choix ?
+      </p>
+      <div class="mcq-option">
+        <label><input type="radio" name="q2" value="alignement"> Prix d’alignement</label>
+      </div>
+      <div class="mcq-option">
+        <label><input type="radio" name="q2" value="ecremage"> Prix d’écrémage</label>
+      </div>
+      <div class="mcq-option">
+        <label><input type="radio" name="q2" value="penetration"> Prix de pénétration</label>
+      </div>
+      <div class="mcq-option">
+        <label><input type="radio" name="q2" value="differenciation"> Prix de différenciation (valeur ajoutée)</label>
+      </div>
+      <button class="btn" data-exo="2">Vérifier</button>
+      <div class="result" id="fb2"></div>
+    </div>
+
+    <!-- Exercice 3 -->
+    <div class="exo">
+      <div class="exo-title">
+        Exercice 3 – Prix psychologique
+        <span class="pill">prix psy</span><span class="pill">choix & justification</span>
+      </div>
+      <p class="exo-enonce">
+        Les enquêtes clients montrent qu’un prix <strong>en dessous de 260 €</strong> fait douter de la qualité,  
+        et qu’<strong>au-delà de 320 €</strong>, la plupart des clients renoncent à l’achat.  
+        Propose un <strong>prix psychologique</strong> pour l’iPhone 12 reconditionné dans cette zone.
+      </p>
+      <label for="rep3">Ta proposition de prix psychologique :</label>
+      <input type="text" id="rep3" placeholder="Ex : 289">
+      <div class="unit">Unité : € (doit être entre 260 et 320 pour rester cohérent)</div>
+      <button class="btn" data-exo="3">Vérifier</button>
+      <div class="result" id="fb3"></div>
+    </div>
+
+    <!-- Exercice 4 -->
+    <div class="exo">
+      <div class="exo-title">
+        Exercice 4 – Sensibilité au prix et élasticité
+        <span class="pill">élasticité</span><span class="pill">analyse</span>
+      </div>
+      <p class="exo-enonce">
+        Recommerce+ fait passer le prix d’un modèle de smartphone reconditionné de <strong>270 €</strong> à <strong>300 €</strong>.  
+        Les ventes passent de <strong>10 000</strong> unités à <strong>8 000</strong> unités.  
+        Calcule l’<strong>élasticité-prix de la demande</strong> (E), arrondie au centième, puis vérifie ta réponse.
+      </p>
+      <label for="rep4">Ta réponse (valeur de E) :</label>
+      <input type="text" id="rep4" placeholder="Ex : -1,80">
+      <div class="unit">Nombre, sans %, avec signe (ex : -1,80)</div>
+      <button class="btn" data-exo="4">Vérifier</button>
+      <div class="result" id="fb4"></div>
+    </div>
+
+    <!-- Exercice 5 -->
+    <div class="exo">
+      <div class="exo-title">
+        Exercice 5 – Justifier un prix plus élevé
+        <span class="pill">argumentation</span><span class="pill">valeur perçue</span>
+      </div>
+      <p class="exo-enonce">
+        Recommerce+ envisage un prix légèrement supérieur au marché (par exemple <strong>305 €</strong>),  
+        mais avec une offre renforcée : origine France, garantie longue, SAV réactif, démarche RSE.  
+        Rédige un court <strong>argumentaire</strong> (3–5 lignes) pour justifier ce prix plus élevé auprès d’un client hésitant.
+      </p>
+      <label for="rep5">Ton argumentaire (valeur perçue, preuves, bénéfices client) :</label>
+      <textarea id="rep5" placeholder="Exploite la qualité du reconditionnement, la garantie, le SAV, la dimension éthique/RSE…"></textarea>
+      <button class="btn secondary" data-exo="5">Obtenir un feedback</button>
+      <div class="result" id="fb5"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Utilitaires ----------
+  function parseNumber(str) {
+    if (typeof str !== "string") return NaN;
+    const cleaned = str.replace(/\s/g, "").replace(",", ".").trim();
+    if (!cleaned) return NaN;
+    return parseFloat(cleaned);
+  }
+
+  function isClose(a, b, tol) {
+    return Math.abs(a - b) <= tol;
+  }
+
+  function fr(x, decimals = 2) {
+    return x.toLocaleString("fr-FR", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
+  }
+
+  // ---------- Données des exercices ----------
+  const exercices = {
+    1: {
+      correct: 275,
+      tol: 0.5,
+      explanation:
+        "Prix de vente = coût de revient × (1 + marge). Ici : 220 € × (1 + 0,25) = 220 × 1,25 = 275 €."
+    },
+    3: {
+      min: 260,
+      max: 320
+    },
+    4: {
+      correct: -1.8,
+      tol: 0.05,
+      explanation:
+        "ΔQ / Q1 = (8000 – 10000) / 10000 = -2000 / 10000 = -0,20. " +
+        "ΔP / P1 = (300 – 270) / 270 = 30 / 270 ≈ 0,11. Élasticité E = -0,20 / 0,11 ≈ -1,80. " +
+        "En valeur absolue, |E| > 1 : la demande est fortement sensible au prix."
+    }
+  };
+
+  // ---------- Vérification Exercice 1 ----------
+  function checkEx1() {
+    const input = document.getElementById("rep1");
+    const fb = document.getElementById("fb1");
+    const val = parseNumber(input.value);
+    fb.style.display = "block";
+    fb.classList.remove("ok", "ko");
+
+    if (isNaN(val)) {
+      fb.classList.add("ko");
+      fb.innerHTML = "<strong>Réponse non valide</strong>Merci de saisir un nombre (tu peux utiliser une virgule).";
+      return;
+    }
+
+    const target = exercices[1].correct;
+    const tol = exercices[1].tol;
+
+    if (isClose(val, target, tol)) {
+      fb.classList.add("ok");
+      fb.innerHTML =
+        "<strong>Bonne réponse</strong>" +
+        "<span class='exp'>" + exercices[1].explanation + "</span>";
+    } else {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Ce n’est pas exact</strong>" +
+        "<span class='exp'>" +
+        exercices[1].explanation +
+        "<br>La valeur attendue est d’environ <strong>" + fr(target, 2) + " €</strong>.</span>";
+    }
+  }
+
+  // ---------- Vérification Exercice 2 (QCM) ----------
+  function checkEx2() {
+    const fb = document.getElementById("fb2");
+    fb.style.display = "block";
+    fb.classList.remove("ok", "ko");
+
+    const radios = document.querySelectorAll("input[name='q2']");
+    let selected = null;
+    radios.forEach(r => { if (r.checked) selected = r.value; });
+
+    if (!selected) {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Aucune réponse</strong>" +
+        "<span class='exp'>Choisis une stratégie parmi les propositions (alignement, écrémage, pénétration, différenciation).</span>";
+      return;
+    }
+
+    if (selected === "alignement") {
+      fb.classList.add("ok");
+      fb.innerHTML =
+        "<strong>Bonne réponse</strong>" +
+        "<span class='exp'>Fixer exactement le même prix que la concurrence sans avantage particulier correspond à une <strong>stratégie d’alignement</strong> : on suit le marché sans chercher ni à casser les prix ni à se positionner très au-dessus.</span>";
+    } else {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Ce n’est pas la meilleure stratégie</strong>" +
+        "<span class='exp'>Ici, l’entreprise se cale sur le prix moyen du marché : c’est un <strong>prix d’alignement</strong>. " +
+        "Un prix nettement plus élevé avec forte valeur ajoutée serait de l’écrémage ou de la différenciation ; un prix beaucoup plus bas serait une stratégie de pénétration.</span>";
+    }
+  }
+
+  // ---------- Vérification Exercice 3 (prix psychologique) ----------
+  function checkEx3() {
+    const input = document.getElementById("rep3");
+    const fb = document.getElementById("fb3");
+    const val = parseNumber(input.value);
+    fb.style.display = "block";
+    fb.classList.remove("ok", "ko");
+
+    if (isNaN(val)) {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Réponse non valide</strong>" +
+        "<span class='exp'>Saisis un montant en euros (tu peux utiliser une virgule).</span>";
+      return;
+    }
+
+    const { min, max } = exercices[3];
+
+    if (val < min) {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Prix trop bas</strong>" +
+        "<span class='exp'>Un prix inférieur à " + min + " € risque de dégrader la perception de qualité. " +
+        "Le prix psychologique doit rester dans la zone d’acceptabilité, entre <strong>" + min + " €</strong> et <strong>" + max + " €</strong>.</span>";
+    } else if (val > max) {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Prix trop élevé</strong>" +
+        "<span class='exp'>Un prix supérieur à " + max + " € risque de faire fuir la plupart des clients. " +
+        "La zone d’acceptabilité se situe entre <strong>" + min + " €</strong> et <strong>" + max + " €</strong>.</span>";
+    } else {
+      fb.classList.add("ok");
+      let nuance = "";
+      if (val < (min + max) / 2) {
+        nuance = "Tu te situes dans le bas de la zone, ce qui favorise la perception d’un bon rapport qualité/prix mais rapproche du risque de prix “trop bas”.";
+      } else if (val > (min + max) / 2) {
+        nuance = "Tu te situes dans le haut de la zone, ce qui peut renforcer l’image de qualité/premium mais augmente le risque de frein à l’achat.";
+      } else {
+        nuance = "Tu es au centre de la zone, ce qui équilibre qualité perçue et accessibilité.";
+      }
+      fb.innerHTML =
+        "<strong>Prix psychologique cohérent</strong>" +
+        "<span class='exp'>Ton prix reste dans la zone d’acceptabilité définie (" + min + "–" + max + " €). " +
+        nuance + "</span>";
+    }
+  }
+
+  // ---------- Vérification Exercice 4 (élasticité) ----------
+  function checkEx4() {
+    const input = document.getElementById("rep4");
+    const fb = document.getElementById("fb4");
+    const val = parseNumber(input.value);
+    fb.style.display = "block";
+    fb.classList.remove("ok", "ko");
+
+    if (isNaN(val)) {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Réponse non valide</strong>" +
+        "<span class='exp'>Saisis une valeur numérique (avec signe), ex : -1,80.</span>";
+      return;
+    }
+
+    const target = exercices[4].correct;
+    const tol = exercices[4].tol;
+
+    if (isClose(val, target, tol)) {
+      fb.classList.add("ok");
+      fb.innerHTML =
+        "<strong>Bonne réponse</strong>" +
+        "<span class='exp'>" + exercices[4].explanation + "</span>";
+    } else {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Ce n’est pas exact</strong>" +
+        "<span class='exp'>" +
+        exercices[4].explanation +
+        "<br>La valeur attendue est d’environ <strong>" + fr(target, 2) + "</strong>.</span>";
+    }
+  }
+
+  // ---------- Vérification Exercice 5 (argumentaire texte) ----------
+  function checkEx5() {
+    const input = document.getElementById("rep5");
+    const fb = document.getElementById("fb5");
+    const txt = (input.value || "").trim();
+    fb.style.display = "block";
+    fb.classList.remove("ok", "ko");
+
+    if (txt.length < 40) {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Argumentaire trop court</strong>" +
+        "<span class='exp'>Développe au moins 3–4 idées : éléments de qualité, preuves (garantie, origine, SAV), bénéfices concrets pour le client.</span>";
+      return;
+    }
+
+    const hasQualite = /qualit|fiabilit|origine|france|contr[oô]le|test/i.test(txt);
+    const hasGarantie = /garantie|24 mois|2 ans|sav|service apr[eè]s-vente/i.test(txt);
+    const hasRSE = /rse|[ée]thique|environnement|[ée]colog|reconditionn[eé]|impact/i.test(txt);
+    const hasBenefice = /s[eé]curit|tranquillit|confiance|risque|satisfact|s[eé]r[eé]nit/i.test(txt);
+    const hasComparaison = /concurrent|moins cher|diff[eé]rence|comparaison|par rapport/i.test(txt);
+
+    let score = 0;
+    if (hasQualite) score++;
+    if (hasGarantie) score++;
+    if (hasRSE) score++;
+    if (hasBenefice) score++;
+    if (hasComparaison) score++;
+
+    if (score >= 3) {
+      fb.classList.add("ok");
+      fb.innerHTML =
+        "<strong>Argumentaire convaincant</strong>" +
+        "<span class='exp'>Tu mobilises plusieurs leviers pertinents pour justifier un prix plus élevé : qualité / fiabilité, services (garantie, SAV), dimension éthique/RSE et bénéfices client. " +
+        "En E4, pense à structurer ton discours (caractéristiques → avantages → bénéfices) et à conclure par une proposition claire.</span>";
+    } else {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Argumentaire à renforcer</strong>" +
+        "<span class='exp'>Pour mieux justifier un prix plus élevé, ajoute : (1) des preuves concrètes de qualité et de service (garantie longue, SAV), " +
+        "(2) la dimension éthique/reconditionné (origine, RSE), (3) les bénéfices pour le client (sécurité, sérénité, confiance) " +
+        "et éventuellement une comparaison honnête avec l’offre moins chère des concurrents.</span>";
+    }
+  }
+
+  // ---------- Raccordement des boutons ----------
+  document.querySelectorAll("button[data-exo]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-exo");
+      if (id === "1") checkEx1();
+      else if (id === "2") checkEx2();
+      else if (id === "3") checkEx3();
+      else if (id === "4") checkEx4();
+      else if (id === "5") checkEx5();
+    });
+  });
+</script>
+</body>
+</html>

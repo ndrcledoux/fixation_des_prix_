@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Fixation des prix - BTS NDRC</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f4f6f9;
+      color: #222;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(120deg, #004e92, #000428);
+      color: #fff;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    header p {
+      margin: 0.3rem 0 0;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 1rem auto 2rem;
+      padding: 0 1rem;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
+    nav button {
+      border: none;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    nav button:hover {
+      background-color: #004e92;
+      color: #fff;
+    }
+
+    section {
+      background-color: #ffffff;
+      border-radius: 0.8rem;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    section h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      border-left: 4px solid #004e92;
+      padding-left: 0.5rem;
+    }
+
+    .sub-title {
+      font-weight: 600;
+      margin-top: 0.8rem;
+      margin-bottom: 0.2rem;
+      font-size: 0.95rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      background-color: #e3f2fd;
+      color: #004e92;
+      margin-left: 0.2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 0.6rem;
+    }
+
+    .card {
+      border-radius: 0.7rem;
+      background-color: #f9fafb;
+      padding: 0.7rem 0.8rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-top: 0.4rem;
+      margin-bottom: 0.15rem;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.35rem 0.4rem;
+      border-radius: 0.4rem;
+      border: 1px solid #d1d5db;
+      font-size: 0.85rem;
+    }
+
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .btn {
+      margin-top: 0.6rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      border: none;
+      background-color: #004e92;
+      color: #fff;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background-color: #6b7280;
+    }
+
+    .btn:hover {
+      filter: brightness(1.05);
+    }
+
+    .result {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.5rem;
+      background-color: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+
+    .result strong {
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .feedback-ok {
+      color: #166534;
+    }
+
+    .feedback-ko {
+      color: #b91c1c;
+    }
+
+    .tag-line {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 0.3rem;
+    }
+
+    .quiz-question {
+      margin-bottom: 0.8rem;
+      border-bottom: 1px dashed #e5e7eb;
+      padding-bottom: 0.5rem;
+    }
+
+    .quiz-question:last-child {
+      border-bottom: none;
+    }
+
+    .quiz-question p {
+      margin: 0 0 0.3rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .quiz-question label {
+      font-weight: 400;
+    }
+
+    .quiz-feedback {
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+    }
+
+    .highlight-ok {
+      background-color: #dcfce7;
+    }
+
+    .highlight-ko {
+      background-color: #fee2e2;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.3rem;
+      }
+      header p {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Fixation des prix – Atelier interactif BTS NDRC</h1>
+  <p>Comprendre les concepts, s'entraîner aux calculs et justifier ses choix de prix comme en E4</p>
+</header>
+
+<div class="container">
+  <nav>
+    <button data-target="sr-section">1. SR & Coûts</button>
+    <button data-target="prix-cible-section">2. Prix cible</button>
+    <button data-target="elasticite-section">3. Élasticité</button>
+    <button data-target="justif-section">4. Justification & Quiz</button>
+  </nav>
+
+  <!-- 1. Seuil de rentabilité et coûts -->
+  <section id="sr-section">
+    <h2>1. Fixation par les coûts et seuil de rentabilité</h2>
+    <p class="tag-line">
+      Objectif : distinguer CF / CV, calculer la marge sur coût variable, le seuil de rentabilité et interpréter pour décider d’un prix.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="sub-title">
+          Rappel des notions
+          <span class="badge">CF / CV / MCV / SR</span>
+        </div>
+        <ul style="padding-left:1.1rem; margin:0.4rem 0; font-size:0.85rem;">
+          <li>Coûts fixes (CF) : ne varient pas avec le volume (loyer, salaires, amortissements…).</li>
+          <li>Coûts variables unitaires (CVu) : varient avec le volume (matières, commissions…).</li>
+          <li>Marge sur coût variable unitaire (MCVu) : PVu – CVu.</li>
+          <li>Seuil de rentabilité (SR) : niveau d’activité où le résultat = 0.</li>
+        </ul>
+        <p style="font-size:0.8rem; margin:0.4rem 0 0;">
+          En dessous du SR → pertes.  
+          Au-dessus du SR → bénéfices possibles.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="sub-title">
+          Exercice guidé – Calcul du seuil de rentabilité
+          <span class="badge">Exercice + feedback</span>
+        </div>
+
+        <label for="cf">Coûts fixes (CF) en €</label>
+        <input type="text" id="cf" placeholder="Ex : 20000">
+
+        <label for="cvu">Coût variable unitaire (CVu) en €</label>
+        <input type="text" id="cvu" placeholder="Ex : 12,5">
+
+        <label for="pvu">Prix de vente unitaire (PVu) en €</label>
+        <input type="text" id="pvu" placeholder="Ex : 20">
+
+        <button class="btn" id="btn-sr">Calculer MCV, SR et analyser</button>
+
+        <div class="result" id="sr-result" style="display:none;"></div>
+      </div>
+
+      <div class="card">
+        <div class="sub-title">
+          Auto-évaluation – Interprétation
+          <span class="badge">Justifier</span>
+        </div>
+        <label for="sr-interpretation">
+          Explique, avec tes mots, ce que signifie pour l’entreprise un SR de 5 000 unités.
+        </label>
+        <textarea id="sr-interpretation" placeholder="Tape ici ta justification…"></textarea>
+        <button class="btn secondary" id="btn-sr-feedback">Obtenir un feedback</button>
+        <div class="result" id="sr-interpretation-feedback" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Prix cible -->
+  <section id="prix-cible-section">
+    <h2>2. Prix cible et coût cible</h2>
+    <p class="tag-line">
+      Objectif : partir du prix accepté par le marché pour déterminer le coût maximal acceptable et décider si le projet est viable.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="sub-title">
+          Rappel des notions
+          <span class="badge">Prix cible</span>
+        </div>
+        <p style="font-size:0.85rem; margin:0.3rem 0;">
+          L’entreprise commence par :
+        </p>
+        <ol style="padding-left:1.1rem; margin:0.2rem 0; font-size:0.85rem;">
+          <li>Estimer le <strong>prix de vente cible</strong> accepté par le marché.</li>
+          <li>Fixer une <strong>marge souhaitée</strong> (en %).</li>
+          <li>En déduire le <strong>coût cible maximal</strong>.</li>
+        </ol>
+        <p style="font-size:0.8rem; margin:0.4rem 0 0;">
+          Si le coût prévisionnel réel est supérieur au coût cible → il faut réduire les coûts ou renoncer au projet.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="sub-title">
+          Exercice – Coût cible et décision
+          <span class="badge">Exercice + feedback</span>
+        </div>
+
+        <label for="prix-cible">Prix de vente cible TTC (en €)</label>
+        <input type="text" id="prix-cible" placeholder="Ex : 5700">
+
+        <label for="marge-souhaitee">Marge souhaitée (% du prix de vente)</label>
+        <input type="text" id="marge-souhaitee" placeholder="Ex : 25">
+
+        <label for="cout-previsionnel">Coût prévisionnel estimé (en €)</label>
+        <input type="text" id="cout-previsionnel" placeholder="Ex : 4300">
+
+        <button class="btn" id="btn-prix-cible">Analyser la viabilité</button>
+
+        <div class="result" id="prix-cible-result" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Élasticité -->
+  <section id="elasticite-section">
+    <h2>3. Élasticité-prix de la demande</h2>
+    <p class="tag-line">
+      Objectif : mesurer la sensibilité de la demande à une variation de prix et interpréter pour fixer une stratégie de prix.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="sub-title">
+          Rappel des notions
+          <span class="badge">Élasticité</span>
+        </div>
+        <p style="font-size:0.85rem; margin:0.2rem 0;">
+          Élasticité de la demande par rapport au prix :
+        </p>
+        <p style="font-size:0.85rem; margin:0.2rem 0;">
+          <strong>E = (ΔQ / Q₁) ÷ (ΔP / P₁)</strong>
+        </p>
+        <ul style="padding-left:1.1rem; margin:0.2rem 0; font-size:0.85rem;">
+          <li><strong>Signe</strong> :
+            <ul style="padding-left:1.1rem; margin:0.1rem 0;">
+              <li>– : le prix augmente, la demande diminue (cas le plus courant).</li>
+              <li>+ : prix et demande évoluent dans le même sens (cas atypique).</li>
+            </ul>
+          </li>
+          <li><strong>Valeur absolue</strong> :
+            <ul style="padding-left:1.1rem; margin:0.1rem 0;">
+              <li>|E| &lt; 1 → demande peu élastique (peu sensible au prix).</li>
+              <li>|E| &gt; 1 → demande très élastique (très sensible au prix).</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="sub-title">
+          Calculateur d’élasticité
+          <span class="badge">Exercice + feedback</span>
+        </div>
+
+        <label for="p1">Prix initial P₁ (en €)</label>
+        <input type="text" id="p1" placeholder="Ex : 10">
+
+        <label for="p2">Nouveau prix P₂ (en €)</label>
+        <input type="text" id="p2" placeholder="Ex : 12">
+
+        <label for="q1">Quantité demandée Q₁ (en unités)</label>
+        <input type="text" id="q1" placeholder="Ex : 1000">
+
+        <label for="q2">Nouvelle quantité Q₂ (en unités)</label>
+        <input type="text" id="q2" placeholder="Ex : 800">
+
+        <button class="btn" id="btn-elasticite">Calculer et interpréter</button>
+
+        <div class="result" id="elasticite-result" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Justification & Quiz -->
+  <section id="justif-section">
+    <h2>4. Justification du prix, concurrence et réglementation</h2>
+    <p class="tag-line">
+      Objectif : être capable de justifier un prix auprès d’un client et de respecter le cadre concurrentiel et juridique.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <div class="sub-title">
+          Justifier un prix auprès d’un client
+          <span class="badge">Rédaction + feedback</span>
+        </div>
+
+        <p style="font-size:0.85rem; margin:0.3rem 0;">
+          Situation : Votre offre est plus chère que celle d’un concurrent, mais vous proposez un service de meilleure qualité
+          (garantie, accompagnement, installation).
+          Rédige un court argumentaire pour défendre ton prix (3–5 lignes).
+        </p>
+
+        <textarea id="argumentaire" placeholder="Utilise une logique CAB (Caractéristiques – Avantages – Bénéfices) pour défendre le prix."></textarea>
+        <button class="btn secondary" id="btn-argumentaire">Obtenir un feedback</button>
+        <div class="result" id="argumentaire-feedback" style="display:none;"></div>
+      </div>
+
+      <div class="card">
+        <div class="sub-title">
+          Quiz – Concurrence, prix psychologique et réglementation
+          <span class="badge">Quiz corrigé</span>
+        </div>
+
+        <div id="quiz">
+          <div class="quiz-question" data-question="q1">
+            <p>1. Un bien de première nécessité (ex : sel, pain) a en général :</p>
+            <label><input type="radio" name="q1" value="a"> Une demande très élastique au prix</label><br>
+            <label><input type="radio" name="q1" value="b"> Une demande peu élastique au prix</label><br>
+            <label><input type="radio" name="q1" value="c"> Une demande inversée (plus le prix augmente, plus on en consomme)</label>
+            <div class="quiz-feedback" id="q1-feedback"></div>
+          </div>
+
+          <div class="quiz-question" data-question="q2">
+            <p>2. Le prix psychologique correspond :</p>
+            <label><input type="radio" name="q2" value="a"> Au coût de revient plus la marge souhaitée</label><br>
+            <label><input type="radio" name="q2" value="b"> Au prix jugé acceptable par le client (ni trop cher, ni de mauvaise qualité)</label><br>
+            <label><input type="radio" name="q2" value="c"> Au prix le plus faible possible pour éliminer la concurrence</label>
+            <div class="quiz-feedback" id="q2-feedback"></div>
+          </div>
+
+          <div class="quiz-question" data-question="q3">
+            <p>3. Parmi les pratiques suivantes, laquelle est interdite par la réglementation sur les prix ?</p>
+            <label><input type="radio" name="q3" value="a"> Afficher clairement ses prix en magasin</label><br>
+            <label><input type="radio" name="q3" value="b"> Vendre ponctuellement un produit avec une forte remise mais au-dessus du coût de revient</label><br>
+            <label><input type="radio" name="q3" value="c"> Revendre un produit en dessous de son prix de revient effectif pour éliminer des concurrents</label>
+            <div class="quiz-feedback" id="q3-feedback"></div>
+          </div>
+        </div>
+
+        <button class="btn" id="btn-quiz">Corriger le quiz</button>
+        <div class="result" id="quiz-result" style="display:none;"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // --------- Utilitaires ---------
+  function parseNumber(value) {
+    if (typeof value !== "string") return NaN;
+    const cleaned = value.replace(",", ".").trim();
+    if (cleaned === "") return NaN;
+    return parseFloat(cleaned);
+  }
+
+  function round2(x) {
+    return Math.round(x * 100) / 100;
+  }
+
+  // --------- Navigation ---------
+  document.querySelectorAll("nav button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+
+  // --------- 1. Seuil de rentabilité ---------
+  document.getElementById("btn-sr").addEventListener("click", () => {
+    const cf = parseNumber(document.getElementById("cf").value);
+    const cvu = parseNumber(document.getElementById("cvu").value);
+    const pvu = parseNumber(document.getElementById("pvu").value);
+    const resultDiv = document.getElementById("sr-result");
+
+    if (isNaN(cf) || isNaN(cvu) || isNaN(pvu)) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = "<strong class='feedback-ko'>Attention</strong>Merci de saisir des valeurs numériques pour CF, CVu et PVu.";
+      return;
+    }
+
+    if (pvu <= cvu) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML =
+        "<strong class='feedback-ko'>Problème de rentabilité</strong>" +
+        "Le prix de vente unitaire est inférieur ou égal au coût variable unitaire. " +
+        "La marge sur coût variable est nulle ou négative : il est impossible d'atteindre le seuil de rentabilité avec ces données.";
+      return;
+    }
+
+    const mcvu = pvu - cvu;
+    const tmcvu = mcvu / pvu; // taux de marge sur coût variable
+    const srVolume = cf / mcvu;
+    const srCA = srVolume * pvu;
+
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML =
+      "<strong>Résultats du calcul</strong>" +
+      "<ul style='margin:0.2rem 0; padding-left:1.1rem; font-size:0.85rem;'>" +
+      "<li>MCV unitaire = PVu – CVu = " + round2(pvu) + " – " + round2(cvu) + " = <strong>" + round2(mcvu) + " €</strong></li>" +
+      "<li>Taux de marge sur coût variable ≈ <strong>" + round2(tmcvu * 100) + " %</strong></li>" +
+      "<li>Seuil de rentabilité en volume ≈ CF / MCVu = " + round2(cf) + " / " + round2(mcvu) + " ≈ <strong>" + round2(srVolume) + " unités</strong></li>" +
+      "<li>Seuil de rentabilité en chiffre d’affaires ≈ " + round2(srCA) + " €</li>" +
+      "</ul>" +
+      "<span style='font-size:0.8rem;'>Interprétation : l’entreprise commence à dégager un bénéfice au-delà d’environ <strong>" +
+      round2(srVolume) + " unités vendues</strong>.</span>";
+  });
+
+  document.getElementById("btn-sr-feedback").addEventListener("click", () => {
+    const text = document.getElementById("sr-interpretation").value.trim();
+    const fbDiv = document.getElementById("sr-interpretation-feedback");
+    fbDiv.style.display = "block";
+
+    if (text.length < 20) {
+      fbDiv.innerHTML =
+        "<strong class='feedback-ko'>Feedback</strong>" +
+        "Ta réponse est trop courte. Tu dois expliquer au moins : à partir de quel niveau de ventes l’entreprise couvre ses coûts, " +
+        "et ce qui se passe en dessous / au-dessus du SR.";
+      return;
+    }
+
+    // Feedback qualitatif simple
+    const hasCouvre = /couvr|rentabil|co[uû]ts|perte|b[ée]n[ée]fice|profit/i.test(text);
+    const hasSeuil = /seuil|point mort|SR/i.test(text);
+    const hasAvantApres = /en dessous|au[- ]dessus|apr[eè]s|avant/i.test(text);
+
+    let score = 0;
+    if (hasCouvre) score++;
+    if (hasSeuil) score++;
+    if (hasAvantApres) score++;
+
+    if (score === 3) {
+      fbDiv.innerHTML =
+        "<strong class='feedback-ok'>Très bien</strong>" +
+        "Tu as bien compris : le seuil de rentabilité correspond au niveau de chiffre d’affaires ou de volume à partir duquel l’entreprise couvre tous ses coûts. " +
+        "En dessous, elle est en perte ; au-dessus, elle dégage un bénéfice.";
+    } else {
+      fbDiv.innerHTML =
+        "<strong class='feedback-ko'>À améliorer</strong>" +
+        "Pense à préciser que le SR est le niveau de vente où le résultat est nul : l’entreprise couvre ses coûts (ni perte, ni bénéfice). " +
+        "En dessous : pertes ; au-dessus : bénéfices.";
+    }
+  });
+
+  // --------- 2. Prix cible ---------
+  document.getElementById("btn-prix-cible").addEventListener("click", () => {
+    const prixCible = parseNumber(document.getElementById("prix-cible").value);
+    const margePct = parseNumber(document.getElementById("marge-souhaitee").value);
+    const coutPrev = parseNumber(document.getElementById("cout-previsionnel").value);
+    const resultDiv = document.getElementById("prix-cible-result");
+
+    if (isNaN(prixCible) || isNaN(margePct) || isNaN(coutPrev)) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML =
+        "<strong class='feedback-ko'>Attention</strong>Merci de saisir des valeurs numériques pour le prix cible, la marge et le coût prévisionnel.";
+      return;
+    }
+
+    if (prixCible <= 0) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML =
+        "<strong class='feedback-ko'>Erreur</strong>Le prix cible doit être strictement positif.";
+      return;
+    }
+
+    const margeDec = margePct / 100;
+    if (margeDec < 0 || margeDec >= 1) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML =
+        "<strong class='feedback-ko'>Attention</strong>La marge souhaitée doit être comprise entre 0 % et 100 % (exclu).";
+      return;
+    }
+
+    const coutCible = prixCible * (1 - margeDec);
+    const ecart = coutCible - coutPrev;
+
+    let message =
+      "<strong>Résultats</strong>" +
+      "<ul style='margin:0.2rem 0; padding-left:1.1rem; font-size:0.85rem;'>" +
+      "<li>Prix de vente cible : <strong>" + round2(prixCible) + " €</strong></li>" +
+      "<li>Marge souhaitée : <strong>" + round2(margePct) + " %</strong></li>" +
+      "<li>Coût cible maximal acceptable : <strong>" + round2(coutCible) + " €</strong></li>" +
+      "<li>Coût prévisionnel actuel : <strong>" + round2(coutPrev) + " €</strong></li>" +
+      "</ul>";
+
+    if (coutPrev <= coutCible) {
+      message +=
+        "<span class='feedback-ok' style='font-size:0.8rem;'>Bonne nouvelle : le coût prévisionnel est inférieur ou égal au coût cible. " +
+        "Le projet est <strong>rentable</strong> avec la marge souhaitée.</span>";
+    } else {
+      message +=
+        "<span class='feedback-ko' style='font-size:0.8rem;'>Problème : le coût prévisionnel dépasse le coût cible d’environ <strong>" +
+        round2(-ecart) +
+        " €</strong>. Pour respecter la marge souhaitée, il faut <strong>réduire les coûts</strong>, augmenter le prix ou revoir le projet.</span>";
+    }
+
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML = message;
+  });
+
+  // --------- 3. Élasticité ---------
+  document.getElementById("btn-elasticite").addEventListener("click", () => {
+    const p1 = parseNumber(document.getElementById("p1").value);
+    const p2 = parseNumber(document.getElementById("p2").value);
+    const q1 = parseNumber(document.getElementById("q1").value);
+    const q2 = parseNumber(document.getElementById("q2").value);
+    const resultDiv = document.getElementById("elasticite-result");
+
+    if (isNaN(p1) || isNaN(p2) || isNaN(q1) || isNaN(q2)) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML =
+        "<strong class='feedback-ko'>Attention</strong>Merci de saisir des valeurs numériques pour P₁, P₂, Q₁ et Q₂.";
+      return;
+    }
+
+    if (p1 <= 0 || q1 <= 0) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML =
+        "<strong class='feedback-ko'>Erreur</strong>P₁ et Q₁ doivent être strictement positifs.";
+      return;
+    }
+
+    const deltaQ = q2 - q1;
+    const deltaP = p2 - p1;
+
+    const varQRel = deltaQ / q1;
+    const varPRel = deltaP / p1;
+
+    if (varPRel === 0) {
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML =
+        "<strong class='feedback-ko'>Impossible</strong>Il n’y a pas de variation de prix (P₁ = P₂), on ne peut pas calculer l’élasticité.";
+      return;
+    }
+
+    const E = varQRel / varPRel;
+    const absE = Math.abs(E);
+
+    let sens, type;
+    if (E > 0) {
+      sens = "Prix et demande évoluent dans le même sens (cas atypique).";
+    } else if (E < 0) {
+      sens = "Prix et demande évoluent en sens inverse (cas normal : quand le prix augmente, la demande baisse).";
+    } else {
+      sens = "La demande ne varie pas malgré la variation de prix.";
+    }
+
+    if (absE < 1) {
+      type = "Demande peu élastique : les clients sont peu sensibles au prix.";
+    } else if (absE === 1) {
+      type = "Demande d’élasticité unitaire.";
+    } else {
+      type = "Demande très élastique : les clients sont très sensibles au prix.";
+    }
+
+    resultDiv.style.display = "block";
+    resultDiv.innerHTML =
+      "<strong>Calcul et interprétation</strong>" +
+      "<ul style='margin:0.2rem 0; padding-left:1.1rem; font-size:0.85rem;'>" +
+      "<li>Variation relative de la demande ≈ <strong>" + round2(varQRel * 100) + " %</strong></li>" +
+      "<li>Variation relative du prix ≈ <strong>" + round2(varPRel * 100) + " %</strong></li>" +
+      "<li>Élasticité E ≈ <strong>" + round2(E) + "</strong></li>" +
+      "</ul>" +
+      "<span style='font-size:0.8rem; display:block; margin-top:0.2rem;'>" + sens + "</span>" +
+      "<span style='font-size:0.8rem; display:block; margin-top:0.2rem;'>" + type + "</span>";
+  });
+
+  // --------- 4. Argumentaire prix ---------
+  document.getElementById("btn-argumentaire").addEventListener("click", () => {
+    const arg = document.getElementById("argumentaire").value.trim();
+    const fbDiv = document.getElementById("argumentaire-feedback");
+    fbDiv.style.display = "block";
+
+    if (arg.length < 30) {
+      fbDiv.innerHTML =
+        "<strong class='feedback-ko'>À retravailler</strong>" +
+        "Ton argumentaire est trop court. Essaie de développer au moins 3 idées : caractéristique, avantage, bénéfice client.";
+      return;
+    }
+
+    const hasQualite = /qualit|garantie|service|sav|accompagnement|installation/i.test(arg);
+    const hasComparaison = /concurrent|moins cher|diff[eé]rence|compar/i.test(arg);
+    const hasBenefice = /b[ée]n[ée]fice|gagn|s[eè]curit|tranquillit|fiabilit/i.test(arg);
+
+    let score = 0;
+    if (hasQualite) score++;
+    if (hasComparaison) score++;
+    if (hasBenefice) score++;
+
+    if (score >= 2) {
+      fbDiv.innerHTML =
+        "<strong class='feedback-ok'>Bon argumentaire</strong>" +
+        "Tu mobilises une bonne logique de justification du prix : tu mets en avant la qualité / le service, la différence avec la concurrence et les bénéfices pour le client. " +
+        "En E4, pense à structurer clairement ton discours (CAB ou SIMAC) et à terminer par une proposition de conclusion.";
+    } else {
+      fbDiv.innerHTML =
+        "<strong class='feedback-ko'>À améliorer</strong>" +
+        "Ajoute : (1) des éléments concrets de différenciation (garantie, services inclus), (2) les bénéfices pour le client (gain de temps, sécurité…), " +
+        "et (3) une comparaison avec l’offre concurrente pour justifier l’écart de prix.";
+    }
+  });
+
+  // --------- 4. Quiz ---------
+  const quizCorrections = {
+    q1: {
+      correct: "b",
+      exp: "Les biens de première nécessité ont en général une demande peu élastique : même si le prix augmente, les consommateurs continuent à en acheter."
+    },
+    q2: {
+      correct: "b",
+      exp: "Le prix psychologique correspond au prix jugé acceptable par le client : en dessous, le produit peut paraître de mauvaise qualité ; au-dessus, il est jugé trop cher."
+    },
+    q3: {
+      correct: "c",
+      exp: "La revente à perte (revendre en dessous du prix de revient pour éliminer des concurrents) est interdite par la réglementation."
+    }
+  };
+
+  document.getElementById("btn-quiz").addEventListener("click", () => {
+    let score = 0;
+    let total = Object.keys(quizCorrections).length;
+
+    Object.keys(quizCorrections).forEach(qKey => {
+      const correction = quizCorrections[qKey];
+      const radios = document.querySelectorAll("input[name='" + qKey + "']");
+      let selected = null;
+      radios.forEach(r => {
+        if (r.checked) selected = r.value;
+        // reset styles
+        r.parentElement.classList.remove("highlight-ok", "highlight-ko");
+      });
+
+      const fb = document.getElementById(qKey + "-feedback");
+
+      if (!selected) {
+        fb.innerHTML =
+          "<span class='feedback-ko'>Aucune réponse choisie pour cette question.</span>";
+        return;
+      }
+
+      if (selected === correction.correct) {
+        score++;
+        fb.innerHTML =
+          "<span class='feedback-ok'>Bonne réponse.</span> " +
+          "<span style='font-size:0.8rem; display:block;'>" + correction.exp + "</span>";
+        // surligner la bonne réponse
+        radios.forEach(r => {
+          if (r.value === correction.correct) {
+            r.parentElement.classList.add("highlight-ok");
+          }
+        });
+      } else {
+        fb.innerHTML =
+          "<span class='feedback-ko'>Mauvaise réponse.</span> " +
+          "<span style='font-size:0.8rem; display:block;'>" + correction.exp + "</span>";
+        radios.forEach(r => {
+          if (r.value === correction.correct) {
+            r.parentElement.classList.add("highlight-ok");
+          }
+          if (r.value === selected) {
+            r.parentElement.classList.add("highlight-ko");
+          }
+        });
+      }
+    });
+
+    const quizResult = document.getElementById("quiz-result");
+    quizResult.style.display = "block";
+    quizResult.innerHTML =
+      "<strong>Score global</strong> " +
+      "Tu as obtenu <strong>" + score + " / " + total + "</strong>. " +
+      "En E4, tu dois maîtriser ces notions pour justifier ton prix et respecter la réglementation.";
+  });
+</script>
+</body>
+</html>

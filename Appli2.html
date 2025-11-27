@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Fixation des prix – Exercices progressifs</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f4f6f9;
+      color: #111827;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(120deg, #0f766e, #134e4a);
+      color: #fff;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    header p {
+      margin: 0.3rem 0 0;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 1rem auto 2rem;
+      padding: 0 1rem;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
+    nav button {
+      border: none;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    nav button.active {
+      background-color: #0f766e;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    nav button:hover {
+      filter: brightness(1.05);
+    }
+
+    section {
+      background-color: #ffffff;
+      border-radius: 0.8rem;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    section h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      border-left: 4px solid #0f766e;
+      padding-left: 0.5rem;
+    }
+
+    .level-info {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 0.7rem;
+    }
+
+    .exo {
+      border-radius: 0.7rem;
+      background-color: #f9fafb;
+      padding: 0.7rem 0.8rem;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 0.7rem;
+    }
+
+    .exo-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .exo-tag {
+      font-size: 0.7rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      background-color: #d1fae5;
+      color: #065f46;
+      margin-left: 0.3rem;
+    }
+
+    .exo-enonce {
+      font-size: 0.88rem;
+      margin: 0.3rem 0 0.4rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-top: 0.2rem;
+      margin-bottom: 0.15rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.35rem 0.4rem;
+      border-radius: 0.4rem;
+      border: 1px solid #d1d5db;
+      font-size: 0.85rem;
+    }
+
+    .unit {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 0.1rem;
+    }
+
+    .btn-check {
+      margin-top: 0.5rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: none;
+      background-color: #0f766e;
+      color: #fff;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .btn-check:hover {
+      filter: brightness(1.05);
+    }
+
+    .result {
+      margin-top: 0.4rem;
+      font-size: 0.82rem;
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.5rem;
+      display: none;
+    }
+
+    .result.ok {
+      background-color: #dcfce7;
+      border: 1px solid #86efac;
+      color: #14532d;
+    }
+
+    .result.ko {
+      background-color: #fee2e2;
+      border: 1px solid #fecaca;
+      color: #7f1d1d;
+    }
+
+    .result strong {
+      display: block;
+      margin-bottom: 0.1rem;
+    }
+
+    .explanation {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.78rem;
+      color: #4b5563;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.3rem;
+      }
+      header p {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Fixation des prix – Exercices progressifs</h1>
+  <p>Calculs et vérification automatique des réponses, du niveau 1 au niveau 3</p>
+</header>
+
+<div class="container">
+  <nav>
+    <button data-level="1" class="active">Niveau 1 – Bases</button>
+    <button data-level="2">Niveau 2 – SR & Coût cible</button>
+    <button data-level="3">Niveau 3 – Élasticité & mix</button>
+  </nav>
+
+  <!-- Niveau 1 -->
+  <section data-section="1">
+    <h2>Niveau 1 – Bases du prix et de la marge</h2>
+    <p class="level-info">
+      Objectif : revoir coût de revient, marge en valeur et taux de marge. Les calculs sont simples, mais doivent être rigoureux.
+    </p>
+
+    <div class="exo" id="exo1">
+      <div class="exo-title">
+        Exercice 1 – Prix de vente à partir du coût de revient
+        <span class="exo-tag">coût + marge</span>
+      </div>
+      <p class="exo-enonce">
+        Une entreprise a un coût de revient unitaire de <strong>50 €</strong> pour un produit.  
+        Elle souhaite appliquer une marge de <strong>20 %</strong> calculée sur le coût de revient.  
+        <br>Calcule le <strong>prix de vente unitaire HT</strong>.
+      </p>
+      <label for="rep1">Ta réponse (prix de vente unitaire HT) :</label>
+      <input type="text" id="rep1" placeholder="Ex : 60">
+      <div class="unit">Unité : €</div>
+      <button class="btn-check" data-exo="1">Vérifier</button>
+      <div class="result" id="fb1"></div>
+    </div>
+
+    <div class="exo" id="exo2">
+      <div class="exo-title">
+        Exercice 2 – Marge en valeur
+        <span class="exo-tag">marge €</span>
+      </div>
+      <p class="exo-enonce">
+        Un produit est vendu <strong>80 €</strong> HT.  
+        Son coût de revient unitaire est de <strong>50 €</strong>.  
+        <br>Calcule la <strong>marge unitaire</strong> en euros.
+      </p>
+      <label for="rep2">Ta réponse (marge unitaire) :</label>
+      <input type="text" id="rep2" placeholder="Ex : 30">
+      <div class="unit">Unité : €</div>
+      <button class="btn-check" data-exo="2">Vérifier</button>
+      <div class="result" id="fb2"></div>
+    </div>
+
+    <div class="exo" id="exo3">
+      <div class="exo-title">
+        Exercice 3 – Taux de marge
+        <span class="exo-tag">taux %</span>
+      </div>
+      <p class="exo-enonce">
+        Un produit est vendu <strong>100 €</strong> HT.  
+        Le coût de revient est de <strong>70 €</strong>.  
+        <br>Calcule le <strong>taux de marge</strong> (marge / prix de vente) en pourcentage.
+      </p>
+      <label for="rep3">Ta réponse (taux de marge) :</label>
+      <input type="text" id="rep3" placeholder="Ex : 30">
+      <div class="unit">Unité : % (arrondir au dixième si nécessaire)</div>
+      <button class="btn-check" data-exo="3">Vérifier</button>
+      <div class="result" id="fb3"></div>
+    </div>
+  </section>
+
+  <!-- Niveau 2 -->
+  <section data-section="2" style="display:none;">
+    <h2>Niveau 2 – Seuil de rentabilité et coût cible</h2>
+    <p class="level-info">
+      Objectif : utiliser CF / CV / PV pour trouver un seuil de rentabilité simple, puis raisonner en coût cible à partir d’un prix du marché.
+    </p>
+
+    <div class="exo" id="exo4">
+      <div class="exo-title">
+        Exercice 4 – Seuil de rentabilité (volume)
+        <span class="exo-tag">SR (volume)</span>
+      </div>
+      <p class="exo-enonce">
+        Une entreprise supporte des coûts fixes annuels de <strong>24 000 €</strong>.  
+        Le prix de vente unitaire est de <strong>40 €</strong> et le coût variable unitaire de <strong>25 €</strong>.  
+        <br>Calcule le <strong>seuil de rentabilité en volume</strong> (en nombre d’unités).  
+        (On ne tient pas compte des décimales, arrondis à l’unité la plus proche.)
+      </p>
+      <label for="rep4">Ta réponse (seuil de rentabilité en volume) :</label>
+      <input type="text" id="rep4" placeholder="Ex : 1600">
+      <div class="unit">Unité : unités</div>
+      <button class="btn-check" data-exo="4">Vérifier</button>
+      <div class="result" id="fb4"></div>
+    </div>
+
+    <div class="exo" id="exo5">
+      <div class="exo-title">
+        Exercice 5 – Chiffre d’affaires au seuil
+        <span class="exo-tag">SR (CA)</span>
+      </div>
+      <p class="exo-enonce">
+        On reprend la situation de l’exercice 4.  
+        Le seuil de rentabilité en volume est de <strong>1 600 unités</strong>.  
+        <br>Calcule le <strong>chiffre d’affaires au seuil de rentabilité</strong>.
+      </p>
+      <label for="rep5">Ta réponse (CA au seuil) :</label>
+      <input type="text" id="rep5" placeholder="Ex : 64000">
+      <div class="unit">Unité : €</div>
+      <button class="btn-check" data-exo="5">Vérifier</button>
+      <div class="result" id="fb5"></div>
+    </div>
+
+    <div class="exo" id="exo6">
+      <div class="exo-title">
+        Exercice 6 – Coût cible à partir d’un prix du marché
+        <span class="exo-tag">coût cible</span>
+      </div>
+      <p class="exo-enonce">
+        Le prix de vente accepté par le marché pour une offre est de <strong>5 000 € TTC</strong>.  
+        On suppose que la TVA est de <strong>20 %</strong> et que l’entreprise souhaite une marge de <strong>30 %</strong> du prix de vente HT.  
+        <br>Calcule le <strong>coût cible maximal</strong> (coût maximal à ne pas dépasser).
+      </p>
+      <label for="rep6">Ta réponse (coût cible) :</label>
+      <input type="text" id="rep6" placeholder="Ex : 2916,67">
+      <div class="unit">Unité : € (accepte un arrondi)</div>
+      <button class="btn-check" data-exo="6">Vérifier</button>
+      <div class="result" id="fb6"></div>
+    </div>
+  </section>
+
+  <!-- Niveau 3 -->
+  <section data-section="3" style="display:none;">
+    <h2>Niveau 3 – Élasticité et cas mixte</h2>
+    <p class="level-info">
+      Objectif : calculer une élasticité simple, puis combiner plusieurs notions (prix, marge, SR) dans un même cas.
+    </p>
+
+    <div class="exo" id="exo7">
+      <div class="exo-title">
+        Exercice 7 – Élasticité-prix de la demande
+        <span class="exo-tag">élasticité</span>
+      </div>
+      <p class="exo-enonce">
+        Le prix d’un abonnement passe de <strong>20 €</strong> à <strong>24 €</strong>.  
+        Dans le même temps, le nombre d’abonnés passe de <strong>1 000</strong> à <strong>850</strong>.  
+        <br>Calcule l’<strong>élasticité-prix de la demande</strong> (E), en arrondissant au centième.
+      </p>
+      <label for="rep7">Ta réponse (valeur de E) :</label>
+      <input type="text" id="rep7" placeholder="Ex : -0,75">
+      <div class="unit">Unité : nombre (sans %)</div>
+      <button class="btn-check" data-exo="7">Vérifier</button>
+      <div class="result" id="fb7"></div>
+    </div>
+
+    <div class="exo" id="exo8">
+      <div class="exo-title">
+        Exercice 8 – Cas mixte : prix, marge et seuil
+        <span class="exo-tag">cas complet</span>
+      </div>
+      <p class="exo-enonce">
+        Une entreprise vend un produit à <strong>50 €</strong> HT.  
+        Le coût variable unitaire est de <strong>30 €</strong> et les coûts fixes annuels sont de <strong>40 000 €</strong>.  
+        <br>1) Calcule la <strong>marge sur coût variable unitaire</strong>.  
+        <br>2) Calcule le <strong>seuil de rentabilité en volume</strong>.
+        <br><br>
+        On te demande ici de répondre uniquement à la <strong>question 2</strong> : le <strong>seuil de rentabilité en volume</strong>.
+      </p>
+      <label for="rep8">Ta réponse (seuil de rentabilité en volume) :</label>
+      <input type="text" id="rep8" placeholder="Ex : 2000">
+      <div class="unit">Unité : unités</div>
+      <button class="btn-check" data-exo="8">Vérifier</button>
+      <div class="result" id="fb8"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // --------- Utilitaires ---------
+  function parseNumber(value) {
+    if (typeof value !== "string") return NaN;
+    const cleaned = value.replace(/\s/g, "").replace(",", ".").trim();
+    if (cleaned === "") return NaN;
+    return parseFloat(cleaned);
+  }
+
+  function isClose(a, b, tol) {
+    return Math.abs(a - b) <= tol;
+  }
+
+  function formatNumber(x, decimals = 2) {
+    return x.toLocaleString("fr-FR", {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
+  }
+
+  // --------- Navigation niveaux ---------
+  const levelButtons = document.querySelectorAll("nav button");
+  const sections = document.querySelectorAll("section[data-section]");
+
+  levelButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const level = btn.getAttribute("data-level");
+
+      levelButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      sections.forEach(sec => {
+        sec.style.display = sec.getAttribute("data-section") === level ? "block" : "none";
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+
+  // --------- Données des exercices ---------
+  const exos = {
+    1: {
+      correct: 60,
+      tol: 0.1,
+      explanation:
+        "Prix de vente = coût de revient + marge = 50 € + (20 % × 50 €) = 50 € + 10 € = 60 €."
+    },
+    2: {
+      correct: 30,
+      tol: 0.1,
+      explanation:
+        "Marge unitaire = prix de vente – coût de revient = 80 € – 50 € = 30 €."
+    },
+    3: {
+      correct: 30,
+      tol: 0.2,
+      explanation:
+        "Marge = 100 € – 70 € = 30 €. Taux de marge = marge / prix de vente = 30 / 100 = 0,30, soit 30 %."
+    },
+    4: {
+      correct: 1600,
+      tol: 1,
+      explanation:
+        "MCV unitaire = 40 € – 25 € = 15 €. SR en volume = CF / MCVu = 24 000 / 15 ≈ 1 600 unités."
+    },
+    5: {
+      correct: 64000,
+      tol: 1,
+      explanation:
+        "CA au seuil = SR volume × prix de vente = 1 600 × 40 € = 64 000 €."
+    },
+    6: {
+      // Prix TTC = 5000 ; TVA 20 % → PV HT = 5000 / 1,2 = 4166,67 ; marge 30 % PV HT → coût cible = 70 % PV HT
+      correct: 2916.67,
+      tol: 1,
+      explanation:
+        "PV TTC = 5 000 €. PV HT = 5 000 / 1,20 ≈ 4 166,67 €. Marge souhaitée = 30 % du PV HT. Coût cible = PV HT × (1 – 0,30) ≈ 4 166,67 × 0,70 ≈ 2 916,67 €."
+    },
+    7: {
+      // E = (ΔQ/Q1) / (ΔP/P1) = ((850-1000)/1000) / ((24-20)/20) = (-150/1000) / (4/20) = -0.15 / 0.2 = -0.75
+      correct: -0.75,
+      tol: 0.02,
+      explanation:
+        "Variation relative Q = (850 – 1 000) / 1 000 = -150 / 1 000 = -0,15. Variation relative P = (24 – 20) / 20 = 4 / 20 = 0,20. Élasticité E = -0,15 / 0,20 = -0,75."
+    },
+    8: {
+      // MCVu = 50-30=20 ; SR vol = 40000/20=2000
+      correct: 2000,
+      tol: 1,
+      explanation:
+        "Marge sur coût variable unitaire = 50 € – 30 € = 20 €. Seuil de rentabilité en volume = CF / MCVu = 40 000 / 20 = 2 000 unités."
+    }
+  };
+
+  function checkExercise(exoId) {
+    const input = document.getElementById("rep" + exoId);
+    const fb = document.getElementById("fb" + exoId);
+    const data = exos[exoId];
+
+    if (!input || !fb || !data) return;
+
+    const value = parseNumber(input.value);
+    fb.style.display = "block";
+    fb.classList.remove("ok", "ko");
+
+    if (isNaN(value)) {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Réponse non valide</strong>Merci de saisir un nombre (tu peux utiliser une virgule ou un point).";
+      return;
+    }
+
+    if (isClose(value, data.correct, data.tol)) {
+      fb.classList.add("ok");
+      fb.innerHTML =
+        "<strong>Bonne réponse</strong>" +
+        "<span class=\"explanation\">" + data.explanation + "</span>";
+    } else {
+      fb.classList.add("ko");
+      fb.innerHTML =
+        "<strong>Ce n’est pas exact</strong>" +
+        "<span class=\"explanation\">" +
+        data.explanation +
+        "<br>La valeur attendue est environ <strong>" +
+        formatNumber(data.correct, exoId === 7 ? 2 : 2) +
+        "</strong>.</span>";
+    }
+  }
+
+  // --------- Écouteurs sur tous les boutons "Vérifier" ---------
+  document.querySelectorAll(".btn-check").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const exoId = btn.getAttribute("data-exo");
+      checkExercise(exoId);
+    });
+  });
+</script>
+</body>
+</html>
