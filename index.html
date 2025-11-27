@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Le prix en marketing – BTS NDRC</title>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:#0f172a;
+      color:#0f172a;
+    }
+
+    body {
+      margin:0;
+      padding:0;
+      background:#0f172a;
+    }
+
+    header {
+      background:linear-gradient(120deg,#1d4ed8,#0f172a);
+      color:#fff;
+      padding:1.4rem 1rem 1rem;
+      text-align:center;
+    }
+
+    header h1 {
+      margin:0;
+      font-size:1.6rem;
+    }
+
+    header p {
+      margin:0.3rem 0 0;
+      font-size:0.9rem;
+      opacity:0.95;
+    }
+
+    .page {
+      display:flex;
+      max-width:1150px;
+      margin:1rem auto 2rem;
+      gap:1rem;
+      padding:0 1rem;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      flex:0 0 230px;
+      background:#020617;
+      border-radius:0.8rem;
+      padding:0.8rem;
+      color:#e5e7eb;
+      position:sticky;
+      top:0.8rem;
+      height:fit-content;
+    }
+
+    .sidebar h2 {
+      font-size:0.95rem;
+      margin-top:0;
+      margin-bottom:0.4rem;
+      color:#e5e7eb;
+    }
+
+    .nav-link {
+      display:block;
+      font-size:0.8rem;
+      padding:0.3rem 0.4rem;
+      border-radius:0.4rem;
+      color:#e5e7eb;
+      text-decoration:none;
+      margin-bottom:0.15rem;
+    }
+
+    .nav-link:hover {
+      background:#1d4ed8;
+    }
+
+    .nav-link span {
+      opacity:0.7;
+    }
+
+    /* Contenu */
+    .content {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:0.8rem;
+    }
+
+    section {
+      background:#f9fafb;
+      border-radius:0.9rem;
+      padding:0.9rem 1rem;
+      box-shadow:0 1px 3px rgba(15,23,42,0.25);
+      border:1px solid #e5e7eb;
+    }
+
+    section h2 {
+      margin-top:0;
+      font-size:1.1rem;
+      border-left:4px solid #1d4ed8;
+      padding-left:0.5rem;
+      color:#0f172a;
+    }
+
+    .tagline {
+      font-size:0.85rem;
+      color:#6b7280;
+      margin-bottom:0.5rem;
+    }
+
+    p, li {
+      font-size:0.88rem;
+      line-height:1.45;
+    }
+
+    ul, ol {
+      margin:0.4rem 0;
+      padding-left:1.1rem;
+    }
+
+    .grid-2 {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:0.7rem;
+      margin-top:0.3rem;
+    }
+
+    .card {
+      background:#ffffff;
+      border-radius:0.7rem;
+      border:1px solid #e5e7eb;
+      padding:0.6rem 0.7rem;
+    }
+
+    .card-title {
+      font-size:0.9rem;
+      font-weight:600;
+      margin-bottom:0.2rem;
+    }
+
+    .pill {
+      display:inline-block;
+      font-size:0.7rem;
+      padding:0.05rem 0.45rem;
+      border-radius:999px;
+      background:#e0f2fe;
+      color:#1d4ed8;
+      margin-left:0.3rem;
+    }
+
+    details {
+      margin-top:0.4rem;
+      border-radius:0.6rem;
+      background:#f3f4f6;
+      border:1px dashed #e5e7eb;
+      padding:0.45rem 0.6rem;
+      font-size:0.83rem;
+    }
+
+    details summary {
+      cursor:pointer;
+      font-weight:600;
+      color:#1d4ed8;
+    }
+
+    details summary::-webkit-details-marker {
+      display:none;
+    }
+
+    details summary::before {
+      content:"▶ ";
+      font-size:0.7rem;
+    }
+
+    details[open] summary::before {
+      content:"▼ ";
+    }
+
+    /* Quiz / interactions */
+    .quiz {
+      margin-top:0.4rem;
+      border-radius:0.6rem;
+      background:#eff6ff;
+      border:1px solid #bfdbfe;
+      padding:0.45rem 0.6rem;
+      font-size:0.82rem;
+    }
+
+    .quiz-title {
+      font-weight:600;
+      margin-bottom:0.25rem;
+      color:#1d4ed8;
+    }
+
+    .mcq-option {
+      margin-bottom:0.12rem;
+    }
+
+    .mcq-option label {
+      font-size:0.8rem;
+      cursor:pointer;
+    }
+
+    .mcq-option input {
+      margin-right:0.25rem;
+    }
+
+    .btn {
+      margin-top:0.35rem;
+      padding:0.3rem 0.7rem;
+      border-radius:999px;
+      border:none;
+      background:#1d4ed8;
+      color:#fff;
+      font-size:0.78rem;
+      cursor:pointer;
+    }
+
+    .btn:hover {
+      filter:brightness(1.05);
+    }
+
+    .result {
+      margin-top:0.3rem;
+      font-size:0.78rem;
+      border-radius:0.5rem;
+      padding:0.35rem 0.45rem;
+      display:none;
+    }
+
+    .result.ok {
+      background:#dcfce7;
+      border:1px solid #86efac;
+      color:#14532d;
+    }
+
+    .result.ko {
+      background:#fee2e2;
+      border:1px solid #fecaca;
+      color:#7f1d1d;
+    }
+
+    .result strong {
+      display:block;
+      margin-bottom:0.1rem;
+    }
+
+    .result span.exp {
+      display:block;
+      margin-top:0.12rem;
+      color:#374151;
+    }
+
+    .example {
+      font-size:0.82rem;
+      background:#eef2ff;
+      border-radius:0.5rem;
+      padding:0.35rem 0.45rem;
+      margin-top:0.3rem;
+    }
+
+    .example strong {
+      color:#1d4ed8;
+    }
+
+    @media (max-width:800px) {
+      .page {
+        flex-direction:column;
+      }
+      .sidebar {
+        position:static;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Le prix en marketing – BTS NDRC</h1>
+  <p>Comprendre les logiques de fixation des prix et leurs impacts sur la perception du client</p>
+</header>
+
+<div class="page">
+  <!-- NAVIGATION LATERALE -->
+  <aside class="sidebar">
+    <h2>Plan du cours</h2>
+    <a class="nav-link" href="#intro"><span>0.</span> Rôle du prix</a>
+    <a class="nav-link" href="#composantes"><span>1.</span> Composantes du prix</a>
+    <a class="nav-link" href="#strategies"><span>2.</span> Stratégies de prix</a>
+    <a class="nav-link" href="#psychologique"><span>3.</span> Prix psychologique</a>
+    <a class="nav-link" href="#valeur"><span>4.</span> Prix & valeur perçue</a>
+    <a class="nav-link" href="#leviers"><span>5.</span> Leviers pour justifier le prix</a>
+    <a class="nav-link" href="#elasticite"><span>6.</span> Sensibilité & élasticité</a>
+    <a class="nav-link" href="#digital"><span>7.</span> Rôle du digital</a>
+  </aside>
+
+  <!-- CONTENU PRINCIPAL -->
+  <main class="content">
+    <!-- 0. INTRO -->
+    <section id="intro">
+      <h2>0. Le prix : un levier stratégique</h2>
+      <p class="tagline">
+        Le prix n’est pas qu’un chiffre : c’est un signal envoyé au client sur la valeur de l’offre, son positionnement et la stratégie de l’entreprise.
+      </p>
+      <p>
+        Le prix représente la <strong>valeur monétaire demandée au client</strong> pour obtenir un produit ou un service.  
+        En marketing, c’est un <strong>levier stratégique</strong> car il influence :
+      </p>
+      <ul>
+        <li>la <strong>perception</strong> de l’offre (qualité, image, sérieux),</li>
+        <li>la <strong>compétitivité</strong> face aux concurrents,</li>
+        <li>la <strong>rentabilité</strong> de l’entreprise (marge, seuil de rentabilité).</li>
+      </ul>
+      <div class="example">
+        <strong>Exemple Recommerce :</strong> un iPhone 12 reconditionné vendu 289 € : ce prix doit couvrir le coût de reconditionnement, la garantie et rester compétitif par rapport au neuf et aux concurrents.
+      </div>
+    </section>
+
+    <!-- 1. COMPOSANTES DU PRIX -->
+    <section id="composantes">
+      <h2>1. Composantes du prix</h2>
+      <p class="tagline">
+        Le prix marketing n’est pas juste “coût + marge” : il intègre la psychologie client, la concurrence et la stratégie globale.
+      </p>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Les éléments clés<span class="pill">définitions</span></div>
+          <ul>
+            <li><strong>Coût de revient :</strong> coût de production + logistique + SAV.</li>
+            <li><strong>Marge :</strong> part du prix qui assure la rentabilité.</li>
+            <li><strong>Prix psychologique :</strong> prix que le client accepte sans méfiance.</li>
+            <li><strong>Positionnement :</strong> image véhiculée (premium, accessible…).</li>
+            <li><strong>Concurrence :</strong> prix observés sur le marché.</li>
+            <li><strong>Stratégie :</strong> prix d’appel, pénétration, écrémage, différenciation…</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Mini-cas Recommerce<span class="pill">exemple</span></div>
+          <p style="font-size:0.86rem;">
+            Recommerce+ vend un iPhone 12 reconditionné :
+          </p>
+          <ul style="font-size:0.86rem;">
+            <li>Coût de revient : <strong>220 €</strong></li>
+            <li>Prix moyen concurrents : <strong>289 €</strong></li>
+            <li>Zone de prix acceptables pour le client : <strong>260–320 €</strong></li>
+          </ul>
+          <p style="font-size:0.86rem;">
+            Le prix choisi devra tenir compte de ces <strong>différentes composantes</strong>, et pas seulement du coût de revient.
+          </p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-title">Quiz rapide</div>
+        <p style="margin:0 0 0.25rem;font-size:0.8rem;">Quel élément est le plus directement lié à la <strong>perception d’image</strong> (premium, accessible, discount) ?</p>
+        <div class="mcq-option">
+          <label><input type="radio" name="q1" value="cout"> Le coût de revient</label>
+        </div>
+        <div class="mcq-option">
+          <label><input type="radio" name="q1" value="positionnement"> Le positionnement</label>
+        </div>
+        <div class="mcq-option">
+          <label><input type="radio" name="q1" value="concurrence"> Le prix des concurrents</label>
+        </div>
+        <button class="btn" data-quiz="1">Vérifier</button>
+        <div class="result" id="fb1"></div>
+      </div>
+    </section>
+
+    <!-- 2. STRATEGIES -->
+    <section id="strategies">
+      <h2>2. Stratégies de fixation de prix</h2>
+      <p class="tagline">
+        On fixe un prix en cohérence avec la stratégie : suivre le marché, se différencier, attaquer, monter en gamme…
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Principales stratégies<span class="pill">tableau</span></div>
+          <ul>
+            <li><strong>Prix d’alignement :</strong> suivre les prix du marché.</li>
+            <li><strong>Écrémage :</strong> prix élevé pour valoriser une offre différenciante.</li>
+            <li><strong>Pénétration :</strong> prix bas pour attirer rapidement des clients.</li>
+            <li><strong>Différenciation :</strong> prix justifié par une valeur ajoutée forte.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Exemples Recommerce<span class="pill">cas</span></div>
+          <ul style="font-size:0.86rem;">
+            <li><strong>Alignement :</strong> 289 € comme les concurrents.</li>
+            <li><strong>Pénétration :</strong> 259 € avec promo de lancement.</li>
+            <li><strong>Écrémage / différenciation :</strong> 309 € avec garantie 24 mois, origine France, SAV premium.</li>
+          </ul>
+          <p style="font-size:0.86rem;">
+            Le choix dépend des objectifs : conquête, rentabilité, image, fidélisation…
+          </p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-title">Question de réflexion</div>
+        <p style="margin:0 0 0.25rem;font-size:0.8rem;">
+          Recommerce+ lance une version “premium” (reconditionné en France, tests renforcés, garantie 24 mois) à un prix supérieur au marché.
+          Quel type de stratégie cela illustre le plus ?
+        </p>
+        <div class="mcq-option">
+          <label><input type="radio" name="q2" value="alignement"> Alignement</label>
+        </div>
+        <div class="mcq-option">
+          <label><input type="radio" name="q2" value="ecremage"> Écrémage / différenciation</label>
+        </div>
+        <div class="mcq-option">
+          <label><input type="radio" name="q2" value="penetration"> Pénétration</label>
+        </div>
+        <button class="btn" data-quiz="2">Vérifier</button>
+        <div class="result" id="fb2"></div>
+      </div>
+    </section>
+
+    <!-- 3. PRIX PSYCHOLOGIQUE -->
+    <section id="psychologique">
+      <h2>3. Le prix psychologique</h2>
+      <p class="tagline">
+        Le client a en tête une zone de prix “acceptables” : trop bas = méfiance, trop haut = blocage.
+      </p>
+      <p>
+        Le <strong>prix psychologique</strong> est le prix jugé acceptable par le client, ni trop faible ni trop élevé.  
+        On repère :
+      </p>
+      <ul>
+        <li>un <strong>seuil bas</strong> : en dessous, le client doute de la qualité ;</li>
+        <li>un <strong>seuil haut</strong> : au-dessus, le client abandonne.</li>
+      </ul>
+      <div class="example">
+        <strong>Exemple :</strong> pour un iPhone 12 reconditionné, une étude montre que les clients jugent acceptable un prix entre 260 € et 320 €.  
+        En dessous de 260 €, ils se méfient de la qualité ; au-dessus de 320 €, ils trouvent l’offre trop chère.
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-title">Test rapide</div>
+        <p style="margin:0 0 0.25rem;font-size:0.8rem;">
+          Dans cet exemple (zone 260–320 €), quel est le risque principal d’un prix à <strong>229 €</strong> ?
+        </p>
+        <div class="mcq-option">
+          <label><input type="radio" name="q3" value="cher"> Le produit semblera trop cher.</label>
+        </div>
+        <div class="mcq-option">
+          <label><input type="radio" name="q3" value="qualite"> Le client doutera de la qualité du produit.</label>
+        </div>
+        <div class="mcq-option">
+          <label><input type="radio" name="q3" value="aucun"> Aucun risque particulier.</label>
+        </div>
+        <button class="btn" data-quiz="3">Vérifier</button>
+        <div class="result" id="fb3"></div>
+      </div>
+    </section>
+
+    <!-- 4. VALEUR PERÇUE -->
+    <section id="valeur">
+      <h2>4. Prix et valeur perçue</h2>
+      <p class="tagline">
+        Le client accepte un prix s’il perçoit une valeur supérieure ou au moins équivalente à ce qu’il paie.
+      </p>
+      <p>
+        Un prix n’est jamais jugé seul : il est comparé aux <strong>bénéfices perçus</strong> :
+      </p>
+      <ul>
+        <li>promesse claire et crédible,</li>
+        <li>bénéfices visibles (RSE, qualité, service, fiabilité),</li>
+        <li>expérience fluide et rassurante,</li>
+        <li>offre adaptée à la cible.</li>
+      </ul>
+      <details>
+        <summary>Exemple d’analyse valeur / prix – Recommerce</summary>
+        <p>
+          Si Recommerce propose un iPhone 12 à 305 € (plus cher que le marché) mais ajoute :
+        </p>
+        <ul>
+          <li>origine France et reconditionnement contrôlé,</li>
+          <li>garantie 24 mois,</li>
+          <li>SAV réactif,</li>
+          <li>communication RSE transparente,</li>
+        </ul>
+        <p>le client peut juger que la <strong>valeur perçue</strong> justifie l’écart de prix.</p>
+      </details>
+    </section>
+
+    <!-- 5. LEVIERS POUR JUSTIFIER -->
+    <section id="leviers">
+      <h2>5. Leviers pour justifier un prix</h2>
+      <p class="tagline">
+        Pour défendre un prix, on ne répète pas “c’est de la qualité” : on montre, on prouve, on met en scène.
+      </p>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Leviers concrets<span class="pill">outils</span></div>
+          <ul>
+            <li>Fiches produits détaillées (tests, contrôles, caractéristiques).</li>
+            <li>Témoignages clients, avis en ligne.</li>
+            <li>Storytelling éthique (reconditionné, impact environnemental réduit).</li>
+            <li>Comparaison transparente avec les concurrents.</li>
+            <li>Mise en scène du SAV, de la garantie et du reconditionnement.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">Mini-activité<span class="pill">justifier</span></div>
+          <p style="font-size:0.84rem;">
+            Tu dois justifier un prix de <strong>305 €</strong> (plus cher que la concurrence) pour un iPhone 12 reconditionné.
+            Note mentalement ou sur ton cahier 3 arguments basés sur :
+          </p>
+          <ul style="font-size:0.84rem;">
+            <li>qualité / fiabilité,</li>
+            <li>garantie / SAV,</li>
+            <li>dimension RSE / environnement.</li>
+          </ul>
+          <p style="font-size:0.84rem;">
+            Tu pourras les réutiliser en E4 dans ton argumentaire prix.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. ELASTICITE -->
+    <section id="elasticite">
+      <h2>6. Sensibilité au prix & élasticité</h2>
+      <p class="tagline">
+        Tous les produits ne réagissent pas pareil à une variation de prix : certains marchés sont très sensibles, d’autres beaucoup moins.
+      </p>
+      <p>
+        L’<strong>élasticité-prix de la demande</strong> mesure la sensibilité des ventes à une variation de prix :
+      </p>
+      <p style="font-size:0.86rem;">
+        <strong>E = (ΔQ / Q₁) ÷ (ΔP / P₁)</strong>
+      </p>
+      <ul>
+        <li>|E| &gt; 1 → demande très sensible au prix (élasticité forte).</li>
+        <li>|E| &lt; 1 → demande peu sensible au prix (élasticité faible).</li>
+      </ul>
+      <div class="example">
+        <strong>Exemple :</strong> si le prix augmente de 10 % et que les ventes baissent de 25 %, alors E ≈ -2,5 → demande très sensible au prix.
+      </div>
+
+      <div class="quiz">
+        <div class="quiz-title">Vrai / Faux</div>
+        <p style="margin:0 0 0.25rem;font-size:0.8rem;">
+          Sur le marché du reconditionné, la demande est généralement assez sensible au prix.  
+          Si une petite hausse de prix fait chuter fortement les ventes, on dira que :
+        </p>
+        <div class="mcq-option">
+          <label><input type="radio" name="q4" value="forte"> L’élasticité-prix est forte (en valeur absolue).</label>
+        </div>
+        <div class="mcq-option">
+          <label><input type="radio" name="q4" value="faible"> L’élasticité-prix est faible.</label>
+        </div>
+        <button class="btn" data-quiz="4">Vérifier</button>
+        <div class="result" id="fb4"></div>
+      </div>
+    </section>
+
+    <!-- 7. DIGITAL -->
+    <section id="digital">
+      <h2>7. Rôle du digital dans la stratégie de prix</h2>
+      <p class="tagline">
+        Le digital rend le prix transparent… mais aussi plus personnalisable.
+      </p>
+      <ul>
+        <li><strong>Comparateurs de prix :</strong> le client vérifie immédiatement si l’offre est compétitive.</li>
+        <li><strong>Tarification dynamique :</strong> adaptation automatique des prix (algorithmes, demande, stock).</li>
+        <li><strong>Mise en scène du bénéfice client :</strong> pages produits, vidéos, avis, preuves RSE.</li>
+        <li><strong>Reciblage et promos personnalisées :</strong> codes de réduction, offres limitées, segmentation.</li>
+      </ul>
+      <details>
+        <summary>Exemple d’exploitation pédagogique</summary>
+        <p style="font-size:0.86rem;">
+          En E4, tu peux expliquer comment l’entreprise :
+        </p>
+        <ul style="font-size:0.86rem;">
+          <li>surveille les prix concurrents via des comparateurs,</li>
+          <li>ajuste ses prix selon la demande (périodes fortes / faibles),</li>
+          <li>utilise les avis clients et la RSE pour justifier un prix légèrement plus élevé.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+</div>
+
+<script>
+  // Gestion des quiz simples
+  const corrections = {
+    1: {
+      field: "q1",
+      correct: "positionnement",
+      expOk: "Le positionnement traduit l’image associée au prix (premium, accessible, discount…).",
+      expKo: "Le coût de revient ou les prix concurrents influencent le prix, mais c’est le <strong>positionnement</strong> qui traduit l’image voulue (haut de gamme, accessible…)."
+    },
+    2: {
+      field: "q2",
+      correct: "ecremage",
+      expOk: "Un prix plus élevé avec forte valeur ajoutée (qualité, garantie, origine France) correspond à une logique d’<strong>écrémage / différenciation</strong>.",
+      expKo: "Ici, l’objectif n’est ni de suivre le marché (alignement) ni de casser les prix (pénétration), mais de se positionner plus haut grâce à une valeur ajoutée : c’est de l’écrémage / différenciation."
+    },
+    3: {
+      field: "q3",
+      correct: "qualite",
+      expOk: "Un prix trop bas par rapport à la zone d’acceptabilité fait souvent douter de la <strong>qualité</strong> du produit.",
+      expKo: "À 229 € (en dessous de 260 €), le risque principal est que le client soupçonne une qualité inférieure ou un problème caché."
+    },
+    4: {
+      field: "q4",
+      correct: "forte",
+      expOk: "Si une petite variation de prix entraîne une forte variation des ventes, l’<strong>élasticité-prix</strong> est forte (en valeur absolue).",
+      expKo: "Une élasticité faible signifie que les ventes varient peu quand le prix change, ce qui n’est pas le cas ici."
+    }
+  };
+
+  function handleQuiz(id) {
+    const conf = corrections[id];
+    const radios = document.querySelectorAll("input[name='" + conf.field + "']");
+    let selected = null;
+    radios.forEach(r => { if (r.checked) selected = r.value; });
+
+    const fb = document.getElementById("fb" + id);
+    fb.style.display = "block";
+    fb.classList.remove("ok","ko");
+
+    if (!selected) {
+      fb.classList.add("ko");
+      fb.innerHTML = "<strong>Aucune réponse</strong><span class='exp'>Choisis une proposition avant de vérifier.</span>";
+      return;
+    }
+
+    if (selected === conf.correct) {
+      fb.classList.add("ok");
+      fb.innerHTML = "<strong>Bonne réponse</strong><span class='exp'>" + conf.expOk + "</span>";
+    } else {
+      fb.classList.add("ko");
+      fb.innerHTML = "<strong>À corriger</strong><span class='exp'>" + conf.expKo + "</span>";
+    }
+  }
+
+  document.querySelectorAll("button[data-quiz]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-quiz");
+      handleQuiz(id);
+    });
+  });
+</script>
+</body>
+</html>
